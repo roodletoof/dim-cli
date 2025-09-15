@@ -1,9 +1,11 @@
 package dimcli
 
 import (
-	"fmt"
 	"errors"
+	"fmt"
+	"os"
 	"reflect"
+	"slices"
 )
 
 type dummy struct {}
@@ -48,6 +50,19 @@ func FullTypeNameFor[T any]() string {
 }
 
 func Parse[T any]() func() error {
+	var args = os.Args[1:]
+	var curr = reflect.TypeFor[T]()
+	for _, arg := range args {
+		var currFields = reflect.VisibleFields(curr)
+		var idx = slices.IndexFunc( currFields, func(f reflect.StructField) bool {
+			return f.Name == arg
+		})
+		if idx == -1 {
+			panic("TODO")
+		}
+	}
+	// TODO print the names of the fields and a help-message
+
 
 	return func() error {
 		return errors.New("TODO")
