@@ -61,8 +61,8 @@ func (c Cli) String(name string) (string, error) {
 	}
 	var index int
 	for i, arg := range c.Args {
+		index = i+1
 		if name == arg {
-			index = i+1
 			break
 		}
 	}
